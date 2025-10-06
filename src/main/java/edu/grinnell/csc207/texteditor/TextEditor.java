@@ -20,6 +20,24 @@ import com.googlecode.lanterna.input.KeyStroke;
 
 public class TextEditor {
 
+        public static void drawBuffer(GapBuffer buf, Screen screen) throws IOException {
+        for (int i =0; i < buf.getSize(); i++) {
+            // convert char to textchar
+            TextCharacter[] textch = TextCharacter.fromCharacter(buf.array[i]);
+            // from index calculate row and col, setchar to the backbuffer
+            screen.setCharacter(i % 50, i / 50, textch[0]);
+        }
+
+        int cursorPos = buf.getCursorPosition();
+        // new termPos
+        TerminalPosition curTermPos = new TerminalPosition(cursorPos % 50, cursorPos / 50);
+        // set the cursor in the back buffer
+        screen.setCursorPosition(curTermPos);
+
+        // everything from back buffer to front buffer
+        screen.refresh();
+    }
+
     /**
      * The main entry point for the TextEditor application.
      * @param args command-line arguments.
@@ -55,7 +73,7 @@ public class TextEditor {
                 isRunning = false;
                 System.exit(1);
             }
-            // drawBuffer(buf, screen);
+            drawBuffer(buf, screen);
         }
 
     }
