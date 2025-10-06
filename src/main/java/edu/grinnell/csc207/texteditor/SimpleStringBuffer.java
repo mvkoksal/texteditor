@@ -4,36 +4,62 @@ package edu.grinnell.csc207.texteditor;
  * A naive implementation of a text buffer using a <code>String</code>.
  */
 public class SimpleStringBuffer {
+    String string;
+    int cursor;
+
+    public SimpleStringBuffer() {
+        this.string = "";
+        this.cursor = 0;
+    }
+
     public void insert(char ch) {
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        String firstHalf = string.substring(0, cursor);
+        String secondHalf = string.substring(cursor, string.length());
+        string = firstHalf + ch + secondHalf;
+        cursor++;
     }
 
     public void delete() {
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        if (cursor != 0) {
+        // we remove the last char of firstHalf
+        String firstHalf = string.substring(0, cursor-1);
+        String secondHalf = string.substring(cursor, string.length());
+        string = firstHalf + secondHalf;
+        cursor--;
+        }
     }
 
     public int getCursorPosition() {
-        throw new UnsupportedOperationException("Unimplemented method 'getCursorPosition'");
+        return cursor;
     }
 
     public void moveLeft() {
-        throw new UnsupportedOperationException("Unimplemented method 'moveLeft'");
+        if (cursor > 0) {
+            cursor--;
+        }
     }
 
     public void moveRight() {
-        throw new UnsupportedOperationException("Unimplemented method 'moveRight'");
+        if ((cursor < string.length()) && (cursor != 0)) {
+            cursor++;
+        }
     }
 
     public int getSize() {
-        throw new UnsupportedOperationException("Unimplemented method 'getSize'");
+        return string.length();
     }
 
     public char getChar(int i) {
-        throw new UnsupportedOperationException("Unimplemented method 'getChar'");
+        if (i < string.length()) {
+            return string.charAt(i);
+        } else {
+            throw new IndexOutOfBoundsException();
+        }
+        
     }
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Unimplemented method 'toString'");
+        return string;
     }
 }
