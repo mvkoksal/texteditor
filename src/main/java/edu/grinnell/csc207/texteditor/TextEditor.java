@@ -2,6 +2,9 @@ package edu.grinnell.csc207.texteditor;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TextCharacter;
@@ -43,13 +46,20 @@ public class TextEditor {
      * @param args command-line arguments.
      */
     public static void main(String[] args) throws IOException {
-        if (args.length != 1) {
-            System.err.println("Usage: java TextEditor <filename>");
-            System.exit(1);
-        }
+        // if (args.length != 1) {
+        //     System.err.println("Usage: java TextEditor <filename>");
+        //     System.exit(1);
+        // }
 
-        String path = args[0];
-        System.out.format("Loading %s...\n", path);
+        // String path = args[0];
+        // System.out.format("Loading %s...\n", path);
+
+        // Path textPath = Paths.get("texteditor/mytext.txt");
+ 
+        // if ((Files.exists (textPath)) && (Files.isRegularFile(textPath))) {
+        //     Files.readString(textPath);
+        //     Files.writeString(textPath, "hello");
+        // } 
 
         GapBuffer buf = new GapBuffer();
         Screen screen = new DefaultTerminalFactory().createScreen();
