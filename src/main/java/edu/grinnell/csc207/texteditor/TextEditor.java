@@ -14,17 +14,12 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
  * The driver for the TextEditor Application.
  */
 
- 
- // WIDTH 50
- // HEIGHT 50
- // row: cursorPos / 50
- // column: cursorPos % 50
 
 public class TextEditor {
 
     public static void drawBuffer(GapBuffer buf, Screen screen) throws IOException {
         char[] charArray = buf.toString().toCharArray();
-        for (int i=0; i < buf.getSize(); i++) {
+        for (int i=0; i < charArray.length; i++) {
             // convert char to textchar
             TextCharacter[] textch = TextCharacter.fromCharacter(charArray[i]);
             // from index calculate row and col, setchar to the backbuffer
