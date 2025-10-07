@@ -1,6 +1,4 @@
 package edu.grinnell.csc207.texteditor;
-import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -8,9 +6,10 @@ import java.nio.file.Paths;
 
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TextCharacter;
+import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
-import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 /**
  * The driver for the TextEditor Application.
  */
@@ -24,16 +23,17 @@ import com.googlecode.lanterna.input.KeyStroke;
 public class TextEditor {
 
         public static void drawBuffer(GapBuffer buf, Screen screen) throws IOException {
-        for (int i =0; i < buf.getSize(); i++) {
+        for (int i=0; i < buf.getSize(); i++) {
+            char[] charArray = buf.toString().toCharArray();
             // convert char to textchar
-            TextCharacter[] textch = TextCharacter.fromCharacter(buf.array[i]);
+            TextCharacter[] textch = TextCharacter.fromCharacter(charArray[i]);
             // from index calculate row and col, setchar to the backbuffer
-            screen.setCharacter(i % 50, i / 50, textch[0]);
+            screen.setCharacter(i % 30, i / 30, textch[0]);
         }
 
         int cursorPos = buf.getCursorPosition();
         // new termPos
-        TerminalPosition curTermPos = new TerminalPosition(cursorPos % 50, cursorPos / 50);
+        TerminalPosition curTermPos = new TerminalPosition(cursorPos % 30, cursorPos / 30);
         // set the cursor in the back buffer
         screen.setCursorPosition(curTermPos);
 
@@ -46,22 +46,23 @@ public class TextEditor {
      * @param args command-line arguments.
      */
     public static void main(String[] args) throws IOException {
-        // if (args.length != 1) {
-        //     System.err.println("Usage: java TextEditor <filename>");
-        //     System.exit(1);
-        // }
+        if (args.length != 1) {
+            System.err.println("Usage: java TextEditor <filename>");
+            System.exit(1);
+        }
 
-        // String path = args[0];
-        // System.out.format("Loading %s...\n", path);
+        String path = args[0];
+        System.out.format("Loading %s...\n", path);
 
-        // Path textPath = Paths.get("texteditor/mytext.txt");
- 
-        // if ((Files.exists (textPath)) && (Files.isRegularFile(textPath))) {
-        //     Files.readString(textPath);
-        //     Files.writeString(textPath, "hello");
-        // } 
-
+        Path textPath = Paths.get(path);
         GapBuffer buf = new GapBuffer();
+
+        if ((Files.exists (textPath)) && (Files.isRegularFile(textPath))) {
+            String text = Files.readString(textPath);
+            char[] charArray = text.toCharArray();
+            buf.array = charArray;
+        } 
+
         Screen screen = new DefaultTerminalFactory().createScreen();
         screen.startScreen();
         
@@ -78,13 +79,15 @@ public class TextEditor {
                 buf.moveRight();
             } else if (key.equals (KeyType.Backspace)) {
                 buf.delete();
+                //System.out.println("gapBeg: " + buf.gapBeg);
+                //System.out.println("gapEnd: " + buf.gapEnd);
             } else if (key.equals (KeyType.Escape)) {
-                screen.stopScreen();
                 isRunning = false;
+                screen.stopScreen();
+                Files.writeString(textPath, buf.toString());
                 System.exit(1);
             }
             drawBuffer(buf, screen);
         }
-
     }
 }
