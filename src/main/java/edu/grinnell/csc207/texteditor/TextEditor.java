@@ -22,9 +22,9 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 
 public class TextEditor {
 
-        public static void drawBuffer(GapBuffer buf, Screen screen) throws IOException {
+    public static void drawBuffer(GapBuffer buf, Screen screen) throws IOException {
+        char[] charArray = buf.toString().toCharArray();
         for (int i=0; i < buf.getSize(); i++) {
-            char[] charArray = buf.toString().toCharArray();
             // convert char to textchar
             TextCharacter[] textch = TextCharacter.fromCharacter(charArray[i]);
             // from index calculate row and col, setchar to the backbuffer
@@ -59,8 +59,9 @@ public class TextEditor {
 
         if ((Files.exists (textPath)) && (Files.isRegularFile(textPath))) {
             String text = Files.readString(textPath);
-            char[] charArray = text.toCharArray();
-            buf.array = charArray;
+            for (int i =0; i < text.length(); i++) {
+                buf.insert(text.charAt(i));
+            }
         } 
 
         Screen screen = new DefaultTerminalFactory().createScreen();

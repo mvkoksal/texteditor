@@ -18,11 +18,10 @@ public class GapBuffer {
 
     public void insert(char ch) {
         if (array.length == 0) {
-            char[] newArray = new char[3];
-            array = newArray;
+            array = new char[3];
+            gapBeg = 1;
+            gapEnd = array.length;
             array[0] = ch;
-            gapBeg++;
-            gapEnd+=3;
             
         } else {
             if (gapEnd - gapBeg == 0) {
