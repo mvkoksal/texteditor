@@ -14,30 +14,23 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
  * The driver for the TextEditor Application.
  */
 
- 
- // WIDTH 50
- // HEIGHT 50
- // row: cursorPos / 50
- // column: cursorPos % 50
-
 public class TextEditor {
-
     public static void drawBuffer(GapBuffer buf, Screen screen) throws IOException {
+        int textBoxSize = 30;
+        // Get characters from the array, ignoring the gap
         char[] charArray = buf.toString().toCharArray();
         for (int i=0; i < buf.getSize(); i++) {
-            // convert char to textchar
+            // convert chars to textchars
             TextCharacter[] textch = TextCharacter.fromCharacter(charArray[i]);
-            // from index calculate row and col, setchar to the backbuffer
-            screen.setCharacter(i % 30, i / 30, textch[0]);
+            // calculate row and col based on index, set char to the backbuffer
+            screen.setCharacter(i % textBoxSize, i / textBoxSize, textch[0]);
         }
-
         int cursorPos = buf.getCursorPosition();
-        // new termPos
-        TerminalPosition curTermPos = new TerminalPosition(cursorPos % 30, cursorPos / 30);
-        // set the cursor in the back buffer
+        TerminalPosition curTermPos = new TerminalPosition(cursorPos % textBoxSize, cursorPos / textBoxSize);
+        // set the cursor in the backbuffer
         screen.setCursorPosition(curTermPos);
 
-        // everything from back buffer to front buffer
+        // transfer everything from backbuffer to frontbuffer
         screen.refresh();
     }
 
@@ -57,6 +50,7 @@ public class TextEditor {
         Path textPath = Paths.get(path);
         GapBuffer buf = new GapBuffer();
 
+        // Read file, insert its characters to the buffer
         if ((Files.exists (textPath)) && (Files.isRegularFile(textPath))) {
             String text = Files.readString(textPath);
             for (int i =0; i < text.length(); i++) {
@@ -64,14 +58,15 @@ public class TextEditor {
             }
         } 
 
+        // Initialize the screen
         Screen screen = new DefaultTerminalFactory().createScreen();
         screen.startScreen();
         
         boolean isRunning = true;
+        // Process input
         while (isRunning) {
             KeyStroke stroke = screen.readInput();
             KeyType key = stroke.getKeyType();
-
             if (key.equals (KeyType.Character)) {
                 buf.insert(stroke.getCharacter());
             } else if (key.equals (KeyType.ArrowLeft)) {
@@ -88,6 +83,7 @@ public class TextEditor {
                 Files.writeString(textPath, buf.toString());
                 System.exit(1);
             }
+
             drawBuffer(buf, screen);
         }
     }

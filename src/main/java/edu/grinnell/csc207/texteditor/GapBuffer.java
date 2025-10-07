@@ -16,46 +16,63 @@ public class GapBuffer {
         array = new char[0];
     }
 
+    /**
+     * Inserts a character into the buffer
+     * @param ch, a character to insert
+     */
     public void insert(char ch) {
+        // If the array is empty, initialize it and add ch
         if (array.length == 0) {
             array = new char[3];
             gapBeg = 1;
             gapEnd = array.length;
             array[0] = ch;
-            
+        // If the array is full, grow the buffer
         } else {
             if (gapEnd - gapBeg == 0) {
             char[] newArray = new char[array.length*2];
-            // copy the begpart
+            // copy the left part
             for (int i = 0; i < gapBeg; i++) {
                 newArray[i] = array[i];
             }
-
-            // copy the endpart, this many elements to copy in the second part of the split
+            // variable counting the number of elements in the right section
             int afterCursorCopyNum = array.length - gapEnd;
+            // copy the right part
             for (int i = 1; i <= afterCursorCopyNum; i++) {
                 newArray[newArray.length - i] = array[array.length - i];
             }
-                // update gapEnd cursor
-                gapEnd = newArray.length - afterCursorCopyNum; // this amount of elements copied, and we move the cursor that many times to the left from the end
+                // move gapEnd cursor
+                gapEnd = newArray.length - afterCursorCopyNum; 
                 array = newArray;
             }
             // add new ch
             array[gapBeg] = ch;
+
+            // move gapBeg cursor
             gapBeg++;
         }
     }
 
+    /**
+     * Deletes one character from the left of the cursor.
+     */
     public void delete() {
         if(gapBeg > 0){
             gapBeg--;
         }
     }
 
+    /**
+     * Returns the current cursor position
+     * @return gapBeg - position of the cursor, an integer
+     */
     public int getCursorPosition() {
         return gapBeg;
     }
 
+    /**
+     * Moves the cursor one to the left
+     */
     public void moveLeft() {
         if (gapBeg > 0) {
         array[gapEnd - 1] = array[gapBeg - 1];
@@ -64,6 +81,9 @@ public class GapBuffer {
         }  
     }
 
+    /**
+     * Moves the cursor one to the right
+     */
     public void moveRight() {
         if (gapEnd < array.length) {
             array[gapBeg]= array[gapEnd];
@@ -72,21 +92,31 @@ public class GapBuffer {
         }
     }
 
+    /**
+     * Gets the size of the array, ignoring the gap
+     * @return the size of the array, an integer
+     */
     public int getSize() {
         return (array.length - (gapEnd - gapBeg));
     }
 
+    /**
+     * Gets the char at index i of the array, ignoring the gap
+     * @param i , an integer
+     * @return char, the character at index i
+     */
     public char getChar(int i) {
-        // if index out of bounds
+        // index out of bounds
         if (i >= array.length || i < 0) {
             throw new IndexOutOfBoundsException();
-        // if the index is at the beginning
+        // index at the beginning
         } else if (i >= 0 && i < gapBeg) {
             return array[i];
         } else {
             int gapLength = gapEnd-gapBeg;
-            // skip the length of the space
+            // ignore the gap
             int index = i + gapLength;
+            // index out of bounds (check again after increasing the index)
             if(index >= array.length) {
                 throw new IndexOutOfBoundsException();
             } else {
@@ -95,6 +125,10 @@ public class GapBuffer {
         }
     }
 
+    /**
+     * Returns a string representation of the array, ignoring the gap
+     * @return String, a string representation of the array of characters
+     */
     public String toString() {
         if (array.length == 0) {
             return "";
