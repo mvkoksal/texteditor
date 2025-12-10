@@ -13,7 +13,7 @@ public class GapBuffer {
      * Constructor of a GapBuffer.
      * Initializes fields.
      */
-    public GapBuffer () {
+    public GapBuffer() {
         this.gapBeg = 0;
         this.gapEnd = 0;
         array = new char[0];
@@ -21,7 +21,7 @@ public class GapBuffer {
     
     /**
      * Inserts a character into the buffer
-     * @param ch, a character to insert
+     * @param ch a character to insert
      */
     public void insert(char ch) {
         // If the array is empty, initialize it and add ch
@@ -33,7 +33,7 @@ public class GapBuffer {
         // If the array is full, grow the buffer
         } else {
             if (gapEnd - gapBeg == 0) {
-                char[] newArray = new char[array.length*2];
+                char[] newArray = new char[array.length * 2];
                 // copy the left part
                 for (int i = 0; i < gapBeg; i++) {
                     newArray[i] = array[i];
@@ -44,9 +44,9 @@ public class GapBuffer {
                 for (int i = 1; i <= afterCursorCopyNum; i++) {
                     newArray[newArray.length - i] = array[array.length - i];
                 }
-                    // move gapEnd cursor
-                    gapEnd = newArray.length - afterCursorCopyNum; 
-                    array = newArray;
+                // move gapEnd cursor
+                gapEnd = newArray.length - afterCursorCopyNum; 
+                array = newArray;
             }
             // add new ch
             array[gapBeg] = ch;
