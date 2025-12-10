@@ -78,7 +78,7 @@ public class GapBuffer {
      * Moves the cursor one to the right
      */
     public void moveRight() {
-        if (gapEnd < array.length && array[gapEnd] != 0) {
+        if (gapEnd < array.length) {
             array[gapBeg] = array[gapEnd];
             gapBeg++;
             gapEnd++;
