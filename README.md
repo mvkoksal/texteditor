@@ -1,12 +1,11 @@
 # CSC 207: Text Editor
 
-**Author**: _(TODO: fill me in)_
+**Author**: Meryem Koksal
 
 ## Resources Used
 
-+ _(TODO: fill me in)_
-+ ...
-+ ...
++ The project write-up: 
+https://osera.cs.grinnell.edu/ttap/data-structures-labs/text-editor.html
 
 ## Simple String Buffer Efficiency Analysis
 + The relevant inputs to the method is the length of the string.
@@ -18,5 +17,5 @@
 + This implementation is inefficient, because we cannot modify the existing string since strings are immutable in Java. I have to create new string objects and copy the characters into them each time I want to add a character.
 
 ## Changelog
-
-_(TODO: fill me in with a log of your committed changes)_
++ Fixed checkstyle errors
++ 

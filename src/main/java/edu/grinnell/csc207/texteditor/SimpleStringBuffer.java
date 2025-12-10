@@ -77,7 +77,7 @@ public class SimpleStringBuffer {
      * Gets the char at index i of the array
      * @param i an integer
      * @return char the character at index i
-     * @throws IndexOutOfBoundsException() if index is out of bounds
+     * @throws IndexOutOfBoundsException if index is out of bounds
      */
     public char getChar(int i) {
         if (i < string.length()) {

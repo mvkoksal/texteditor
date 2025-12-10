@@ -15,6 +15,11 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
  * The driver for the TextEditor Application.
  */
 public class TextEditor {
+    /**
+     * Draws the GapBuffer to the screen
+     * @param buf the buffer
+     * @param screen 
+     */
     public static void drawBuffer(GapBuffer buf, Screen screen) throws IOException {
         int textBoxSize = 30;
         // Get characters from the array, ignoring the gap
@@ -68,7 +73,7 @@ public class TextEditor {
         while (isRunning) {
             KeyStroke stroke = screen.readInput();
             KeyType key = stroke.getKeyType();
-            if (key.equals (KeyType.Character)) {
+            if (key.equals(KeyType.Character)) {
                 buf.insert(stroke.getCharacter());
             } else if (key.equals(KeyType.ArrowLeft)) {
                 buf.moveLeft();

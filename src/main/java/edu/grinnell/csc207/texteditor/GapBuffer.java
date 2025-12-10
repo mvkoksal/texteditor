@@ -4,6 +4,8 @@ package edu.grinnell.csc207.texteditor;
  * A gap buffer-based implementation of a text buffer.
  */
 public class GapBuffer {
+    public static final int INITIAL_SIZE = 3;
+
     public char[] array;
     int gapBeg;
     int gapEnd;
@@ -13,9 +15,9 @@ public class GapBuffer {
      * Initializes fields.
      */
     public GapBuffer() {
-        array = new char[3];
+        array = new char[INITIAL_SIZE];
         this.gapBeg = 0;
-        this.gapEnd = array.length;
+        this.gapEnd = array.length-1;
     }
 
     /**
