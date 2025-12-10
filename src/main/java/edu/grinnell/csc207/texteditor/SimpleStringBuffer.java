@@ -17,7 +17,7 @@ public class SimpleStringBuffer {
 
     /**
      * Insert a character into the gap buffer at the cursor position
-     * @param ch, a character to insert
+     * @param ch a character to insert
      */
     public void insert(char ch) {
         String firstHalf = string.substring(0, cursor);
@@ -31,11 +31,11 @@ public class SimpleStringBuffer {
      */
     public void delete() {
         if (cursor != 0) {
-        // Remove the last character of the left part
-        String firstHalf = string.substring(0, cursor-1);
-        String secondHalf = string.substring(cursor, string.length());
-        string = firstHalf + secondHalf;
-        cursor--;
+            // Remove the last character of the left part
+            String firstHalf = string.substring(0, cursor - 1);
+            String secondHalf = string.substring(cursor, string.length());
+            string = firstHalf + secondHalf;
+            cursor--;
         }
     }
 
@@ -75,8 +75,8 @@ public class SimpleStringBuffer {
 
     /**
      * Gets the char at index i of the array
-     * @param i , an integer
-     * @return char, the character at index i
+     * @param i an integer
+     * @return char the character at index i
      * @throws IndexOutOfBoundsException() if index is out of bounds
      */
     public char getChar(int i) {
