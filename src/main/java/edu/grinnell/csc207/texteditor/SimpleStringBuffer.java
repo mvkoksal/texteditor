@@ -60,7 +60,7 @@ public class SimpleStringBuffer {
      * Moves the cursor one to the right
      */
     public void moveRight() {
-        if ((cursor < string.length()) && (cursor != 0)) {
+        if ((cursor < string.length())) {
             cursor++;
         }
     }
